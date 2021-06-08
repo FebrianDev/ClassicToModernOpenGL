@@ -20,6 +20,7 @@ protected:
 	float alpha;
 
 public:
+	virtual ~Object() = default;
 	//constructor
 	Object();
 
@@ -39,6 +40,7 @@ public:
 	virtual void translate(const glm::vec3& vec) = 0;
 	virtual void rotate(const glm::vec3& vec, const float& angle) = 0;
 	virtual void scale(const glm::vec3& vec = glm::vec3(1.0f,1.0f,1.0f)) = 0;
+	virtual glm::vec4 position() = 0;
 	
 };
 

@@ -1,5 +1,17 @@
 #include "Rectangle.h"
 
+float* Rectangle::setVertices(const float& x, const float& y, const float& width, const float& height)
+{
+     float vertices[] = {
+      x        , y         , 0.0f,
+      x + width, y         , 0.0f,
+      x + width, y + height, 0.0f,
+      x        , y + height, 0.0f,
+    };
+
+     return vertices;
+}
+
 Rectangle::Rectangle() {
 	x = 0;
 	y = 0;
@@ -17,51 +29,38 @@ Rectangle::Rectangle(const float& x, const float& y, const float& width, const f
 
 void Rectangle::build()
 {
-    shader = new Shader("circleVertexShader.vs", "circleFragmentShader.fs");
-
+    shader = new Shader("vertexShader.vs", "fragmentShader.fs");
     transform = new Transform(shader);
-	
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-  // ------------------------------------------------------------------
+  
     float vertices[] = {
-         x        , y         , 0.0f,  
-         x + width, y         , 0.0f,  
-         x + width, y + height, 0.0f,  
-         x        , y + height, 0.0f,  
+     x        , y         , 0.0f,   
+     x + width, y         , 0.0f,   
+     x + width, y + height, 0.0f,   
+     x        , y + height, 0.0f,
     };
-    unsigned int indices[] = {  // note that we start from 0!
-        0, 1, 3,  // first Triangle
-        1, 2, 3   // second Triangle
-    };
-
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // texture coord attribute
-   // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    //glEnableVertexAttribArray(1);
+    transform->setPosition(vec4(-1.0f, -.5f, 0.0f, 1.0f));
+    compile(vertices,3, sizeof(vertices));
 }
 
 
 void Rectangle::draw() {
     scale(vec3(1.0f, 1.0f, 1.0f));
-    this->shader->setVec3("color", red, green, blue);
+	
+    shader->use();
+    shader->setVec4("color", red, green, blue,alpha);
 
-    this->shader->use();
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 projection = glm::mat4(1.0f);
+  
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.0f));
+    projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
+	shader->setMat4("view", view);
+    shader->setMat4("projection", projection);
+    transform->setPosition(vec4(x, y, 0.0f, 1.0f));
+	bind();
+
+	glDrawArrays(GL_POLYGON, 0, 4);
 }
 
 
@@ -97,7 +96,12 @@ void Rectangle::scale(const vec3& vec)
     transform->scale(vec);
 }
 
-bool Rectangle::onCollisionWith(Circle circle)
+vec4 Rectangle::position()
 {
-    return this->getX() < circle.getX() && this->getY() < circle.getY();
+    return transform->GetPosition();
 }
+
+// bool Rectangle::onCollisionWith(Circle circle)
+// {
+//     return this->getX() < circle.getX() && this->getY() < circle.getY();
+// }

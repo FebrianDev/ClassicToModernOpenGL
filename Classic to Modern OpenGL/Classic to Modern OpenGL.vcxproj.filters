@@ -36,6 +36,18 @@
     <ClCompile Include="Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -59,6 +71,18 @@
     <ClInclude Include="Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ClassicToModernOpenGL.rc">
@@ -66,17 +90,22 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragmentShader.fs">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="vertexShader.vs">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </None>
-    <None Include="circleFragmentShader.fs">
-      <Filter>Source Files</Filter>
+    <None Include="fragmentShader.fs">
+      <Filter>Resource Files</Filter>
     </None>
     <None Include="circleVertexShader.vs">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </None>
+    <None Include="circleFragmentShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="goku.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

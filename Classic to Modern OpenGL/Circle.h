@@ -3,8 +3,8 @@
 #include "Transform.h"
 #include<vector>
 #include <iostream>
-
-class Circle : public Object
+#include "VertexArray.h"
+class Circle : public Object, VertexArray
 {
 private:
 	Shader* shader;
@@ -27,5 +27,6 @@ public:
 	void translate(const vec3& vec) override;
 	void rotate(const vec3& vec,const float& angle) override;
 	void scale(const vec3& vec) override;
+	glm::vec4 position() override;
 };
 

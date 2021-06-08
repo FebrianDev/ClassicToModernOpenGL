@@ -13,6 +13,16 @@ Circle::Circle(const float& x, const float& y, const float& radius)
     this->radius = radius;
 }
 
+void Circle::setRadius(const float& radius)
+{
+    this->radius = radius;
+}
+
+float Circle::getRadius() const
+{
+    return radius;
+}
+
 void Circle::build()
 {
     shader = new Shader("circleVertexShader.vs", "circleFragmentShader.fs");
@@ -36,21 +46,7 @@ void Circle::build()
         }
     }
 	
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-	// ------------------------------------------------------------------
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
+    compile(vertices,2, sizeof(vertices));
 }
 
 
@@ -58,8 +54,18 @@ void Circle::draw() {
 
     scale(vec3(1.0f, 1.0f, 1.0f));
     shader->use();
-
-    glBindVertexArray(VAO);
+  //  shader->setVec4("color", red, green, blue, alpha);
+    //glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+  //  glm::mat4 view = glm::mat4(1.0f);
+    //glm::mat4 projection = glm::mat4(1.0f);
+    //  model = glm::rotate(model, glm::radians((float)glfwGetTime()), glm::vec3(0.0f, 0.0f, 1.0f));
+    //view = glm::translate(view, glm::vec3(0.0f, 0.0f, -1.0f));
+    //projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+    //   shader->setMat4("model", model);
+   // shader->setMat4("view", view);
+ //   shader->setMat4("projection", projection);
+    transform->setPosition(vec4(x, y,0.0f,1.0f));
+    bind();
     glDrawArrays(GL_POLYGON, 0,60 );
 }
 
@@ -76,4 +82,9 @@ void Circle::rotate(const vec3& vec, const float& angle)
 void Circle::scale(const vec3& vec)
 {
     transform->scale(vec);
+}
+
+glm::vec4 Circle::position()
+{
+    return transform->GetPosition();
 }

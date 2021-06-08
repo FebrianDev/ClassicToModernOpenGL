@@ -15,12 +15,15 @@ class Transform
 private:
 	mat4 transform;
 	Shader* shader;
-	void execute();
+	vec3 vec;
 public:
 	Transform();
 	Transform(Shader* shader);
 	void translate(const vec3& vec);
 	void scale(const vec3& vec);
 	void rotate(const vec3& vec, const float& angle);
+
+	void setPosition(const vec4& vec);
+	vec4 GetPosition() const;
 };
 
