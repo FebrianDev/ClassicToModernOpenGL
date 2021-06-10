@@ -113,8 +113,9 @@ int main()
 		
 		//circle.draw();
 
-		rectangle.draw();
 		rectangle2.draw();
+		rectangle.draw();
+		
 
 		glfwSetKeyCallback(window.getWindow(), key_callback);
 		
